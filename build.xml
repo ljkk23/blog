@@ -52,41 +52,6 @@
     <exclude name="**/?*.aj"/>
   </patternset>
   
-  <!-- JDK definitions -->
-  
-  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
-  <path id="jdk.classpath.1.8">
-    <fileset dir="${jdk.home.1.8}">
-      <include name="jre/lib/charsets.jar"/>
-      <include name="jre/lib/deploy.jar"/>
-      <include name="jre/lib/ext/access-bridge-64.jar"/>
-      <include name="jre/lib/ext/cldrdata.jar"/>
-      <include name="jre/lib/ext/dnsns.jar"/>
-      <include name="jre/lib/ext/jaccess.jar"/>
-      <include name="jre/lib/ext/jfxrt.jar"/>
-      <include name="jre/lib/ext/localedata.jar"/>
-      <include name="jre/lib/ext/nashorn.jar"/>
-      <include name="jre/lib/ext/sunec.jar"/>
-      <include name="jre/lib/ext/sunjce_provider.jar"/>
-      <include name="jre/lib/ext/sunmscapi.jar"/>
-      <include name="jre/lib/ext/sunpkcs11.jar"/>
-      <include name="jre/lib/ext/zipfs.jar"/>
-      <include name="jre/lib/javaws.jar"/>
-      <include name="jre/lib/jce.jar"/>
-      <include name="jre/lib/jfr.jar"/>
-      <include name="jre/lib/jfxswt.jar"/>
-      <include name="jre/lib/jsse.jar"/>
-      <include name="jre/lib/management-agent.jar"/>
-      <include name="jre/lib/plugin.jar"/>
-      <include name="jre/lib/resources.jar"/>
-      <include name="jre/lib/rt.jar"/>
-    </fileset>
-  </path>
-  
-  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
-  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
-  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
-  
   
   <!-- 应用程序服务器库 -->
   
@@ -98,9 +63,6 @@
   <dirname property="module.blog.basedir" file="${ant.file}"/>
   
   
-  <property name="module.jdk.home.blog" value="${project.jdk.home}"/>
-  <property name="module.jdk.bin.blog" value="${project.jdk.bin}"/>
-  <property name="module.jdk.classpath.blog" value="${project.jdk.classpath}"/>
   
   <property name="compiler.args.blog" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
   
@@ -112,7 +74,6 @@
   </path>
   
   <path id="blog.module.production.classpath">
-    <path refid="${module.jdk.classpath.blog}"/>
     <fileset dir="${basedir}/web/WEB-INF/lib">
       <patternset refid="library.patterns"/>
     </fileset>
@@ -126,7 +87,6 @@
   </path>
   
   <path id="blog.module.classpath">
-    <path refid="${module.jdk.classpath.blog}"/>
     <pathelement location="${blog.output.dir}"/>
     <fileset dir="${basedir}/web/WEB-INF/lib">
       <patternset refid="library.patterns"/>
@@ -160,7 +120,7 @@
   
   <target name="compile.module.blog.production" description="Compile module blog; production classes">
     <mkdir dir="${blog.output.dir}"/>
-    <javac destdir="${blog.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.blog}/javac">
+    <javac destdir="${blog.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
       <compilerarg line="${compiler.args.blog}"/>
       <bootclasspath refid="blog.module.bootclasspath"/>
       <classpath refid="blog.module.production.classpath"/>
