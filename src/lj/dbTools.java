@@ -1,5 +1,7 @@
 package lj;
 
+
+
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 
@@ -10,6 +12,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
 
 public class dbTools {
     static DataSource dataSource;
@@ -24,7 +27,7 @@ public class dbTools {
         //加载配置文件
         pro.load(dbTools.class.getResourceAsStream("druid.properties"));
 //        获取数据库连接池对象
-//        dataSource = new DruidDataSource();
+        dataSource = new DruidDataSource();
         dataSource= DruidDataSourceFactory.createDataSource(pro);
 //        获取statement,使用prepareStatement，防止sql注入
 //        pstmt = conn.createStatement();
@@ -40,8 +43,10 @@ public class dbTools {
             return dataSource.getConnection();
         }else
             return dataSource.getConnection();
+
     }
     public static void excute(String sql){
+
         try (Connection conn=getconn()){
 
             try(PreparedStatement statement= conn.prepareStatement(sql)){

@@ -18,6 +18,8 @@ public class LoginServlet extends HttpServlet {
         String sql="select * from userinfo where username='"+username+
                 "';";
         User user=dbTools.getUser(sql);
+        System.out.println(user.getUsername());
+        System.out.println(user);
         HttpSession session=request.getSession(true);
         String codestatus=(String)session.getAttribute(AuthFilter.LOG_VERIFICATAION_STAUS);
         if (user.getUsername().equals(username)) {
